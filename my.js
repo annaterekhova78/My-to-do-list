@@ -4,16 +4,17 @@ var ul = document.querySelector("ul");
 var container = document.querySelector("div");
 var lists = document.querySelectorAll("li");
 var spans = document.getElementsByTagName("span");
+var spansDelete = document.getElementsByClassName(".spanDelete");
+var spansFolder = document.getElementsByClassName(".spanFolder");
 var pencil = document.querySelector("#pencil");
-var goBtn = document.querySelector(".go");
-var pitBtn = document.querySelector(".pit");
-var saveBtn = document.querySelector(".saveBtn");
+var saveBtn = document.querySelector(".save");
+var clearBtn = document.querySelector(".clear");
 var overlay = document.getElementById("overlay")
 
 
 //function to delete todo if delete span is clicked.
 function deleteTodo() {
-    for (let span of spans) {
+    for (let span of spansDelete) {
         span.addEventListener("click", function() {
             span.parentElement.remove();
             event.stopPropagation();
@@ -35,6 +36,7 @@ input.addEventListener("keypress", function(keyPressed) {
         //creating lists and span when enter is clicked
         var li = document.createElement("li");
         var spanElement = document.createElement("span");
+        spanElement.classList.add('spanDelete');
         var icon = document.createElement("i");
 
         var newTodo = this.value;
@@ -42,7 +44,15 @@ input.addEventListener("keypress", function(keyPressed) {
 
         icon.classList.add('fas', 'fa-trash-alt');
         spanElement.append(icon);
-        ul.appendChild(li).append(spanElement, newTodo);
+
+        var spanElementFolder = document.createElement("span");
+        spanElementFolder.classList.add('spanFolder');
+        var iconFolder = document.createElement("i");
+
+
+        iconFolder.classList.add('fas', 'fa-folder');
+        spanElementFolder.append(iconFolder);
+        ul.appendChild(li).append(spanElement, spanElementFolder, newTodo);
 
         deleteTodo();
 
@@ -65,22 +75,16 @@ pencil.addEventListener('click', function() {
 
 
 //save todolist state so user can access it later
-goBtn.addEventListener('click', function() {
+saveBtn.addEventListener('click', function() {
     localStorage.setItem('todoList', ul.innerHTML);
 
 });
 
 //clear all todo when clear button is clicked
-pitBtn.addEventListener('click', function() {
+clearBtn.addEventListener('click', function() {
     ul.innerHTML = "";
     localStorage.removeItem('todoList', ul.innerHTML);
 });
-
-//display overlay when tips btn is clicked
-saveBtn.addEventListener("click", function() {
-    overlay.style.height = "0";
-});
-
 //delete todo
 deleteTodo();
 
