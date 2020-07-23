@@ -45,11 +45,22 @@ input.addEventListener("keypress", function(keyPressed) {
         icon.classList.add('fas', 'fa-trash-alt');
         spanElement.append(icon);
 
+        var input = document.createElement("input");
+        input.type = "file";
+        input.classList.add('inputFolder');
+        input.setAttribute("style", "display: none");
+
         var spanElementFolder = document.createElement("span");
         spanElementFolder.classList.add('spanFolder');
+        spanElementFolder.append(input);
+
         var iconFolder = document.createElement("i");
 
 
+        iconFolder.onclick = function(event) {
+            //  document.getElementsByClassName('inputFolder');
+            input.click();
+        }
         iconFolder.classList.add('fas', 'fa-folder');
         spanElementFolder.append(iconFolder);
         ul.appendChild(li).append(spanElement, spanElementFolder, newTodo);
